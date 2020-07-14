@@ -7,7 +7,7 @@ module.exports.jeromeSays = async (event, context, callback) => {
   url = url + `${images[Math.floor(Math.random() * images.length)]}`
 
   const textData = {
-    text: event.queryStringParameters.phrase ? event.queryStringParameters.phrase : 'Hello VWC', //the text to be rendered on the image
+    text: event.queryStringParameters.text ? event.queryStringParameters.text : 'Hello VWC', //the text to be rendered on the image
     maxWidth: 400, //image width - 10px margin left - 10px margin right
     maxHeight: 267, //logo height + margin
     placementX: 505, // 10px in on the x axis
