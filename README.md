@@ -21,3 +21,10 @@ Returns a random image of Jerome saying what you want him to say
     eyeroll 
 **Required Param**: text
 *Text*: Text for Jerome to say
+
+#TODO
+- []  Create temp directory in S3 bucket
+- []  Convert lambdas to write image to S3
+- []  Convert Lamba response to json object to support Slackbot
+- []  Enable webhooks API in slack app
+- []  Profit

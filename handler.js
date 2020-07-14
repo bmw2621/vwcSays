@@ -34,7 +34,10 @@ module.exports.jeromeSays = async (event, context, callback) => {
 
     callback(null, {
       statusCode: 200,
-      headers: { 'Content-Type': 'image/jpeg' },
+      headers: {
+        'Content-Type': 'image/jpeg',
+        'Access-Control-Allow-Origin': '*'
+      },
       body: buffer.toString('base64'),
       isBase64Encoded: true
     })
@@ -90,7 +93,10 @@ module.exports.jodySays = async (event, context, callback) => {
       null, 
       {
         statusCode: 200,
-        headers: { 'Content-Type': 'image/jpeg' },
+        headers: {
+          'Content-Type': 'image/jpeg',
+          'Access-Control-Allow-Origin': '*'
+        },
         body: buffer.toString('base64'),
         isBase64Encoded: true
       }
