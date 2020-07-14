@@ -35,5 +35,12 @@ functions:
     handler: handler.jodySays
     events:
       - http:
-          path: /jodySays
-          method: get
+          path: /jodySays/{jodytype}
+          method: post
+          contentHandling: CONVERT_TO_BINARY
+          request:
+            parameters:
+              queryStrings:
+                text: true
+              paths:
+                jodytype: true
