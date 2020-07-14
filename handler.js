@@ -43,22 +43,22 @@ module.exports.jeromeSays = async (event, context, callback) => {
 module.exports.jodySays = async event => {
   const Jimp = require('jimp');
   let url = 'https://vwcsays.s3.us-east-2.amazonaws.com/jody/'
-  let image;
+  let imageFileName;
   switch(event.path.jodytype){
     case 'drill':
-      image = 'jodyDrill.jpg';
+      imageFileName = 'jodyDrill.jpg';
       break;
     case 'eyeroll':
-      image = 'jodyEyeroll.jpg';
+      imageFileName = 'jodyEyeroll.jpg';
       break;
     case 'mad':
-      image = 'jodyMad.jpg';
+      imageFileName = 'jodyMad.jpg';
       break;
     case 'happy':
     default:
-      image = 'jodyHappy.jpg';
+      imageFileName = 'jodyHappy.jpg';
   }
-  url = url + image
+  url = url + imageFileName
   const textData = {
     text: event.queryStringParameters.text ? event.queryStringParameters.text : 'Hello VWC', //the text to be rendered on the image
     maxWidth: 400, //image width - 10px margin left - 10px margin right
