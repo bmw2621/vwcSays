@@ -40,21 +40,22 @@ module.exports.jeromeSays = async (event, context, callback) => {
     })
 };
 
-module.exports.jodySays = async event => {
+module.exports.jodySays = async (event, context, callback) => {
   const Jimp = require('jimp');
   let url = 'https://vwcsays.s3.us-east-2.amazonaws.com/jody/'
   let imageFileName;
-  switch(event.path.jodytype){
-    case 'drill':
+  console.log(event)
+  switch(event.path){
+    case '/jodySays/drill':
       imageFileName = 'jodyDrill.jpg';
       break;
-    case 'eyeroll':
+    case '/jodySays/eyeroll':
       imageFileName = 'jodyEyeroll.jpg';
       break;
-    case 'mad':
+    case '/jodySays/mad':
       imageFileName = 'jodyMad.jpg';
       break;
-    case 'happy':
+    case '/jodySays/happy':
     default:
       imageFileName = 'jodyHappy.jpg';
   }
@@ -85,10 +86,13 @@ module.exports.jodySays = async event => {
 
     const buffer = await image.getBufferAsync(Jimp.MIME_JPEG);
 
-    callback(null, {
-      statusCode: 200,
-      headers: { 'Content-Type': 'image/jpeg' },
-      body: buffer.toString('base64'),
-      isBase64Encoded: true
-    })
+    callback(
+      null, 
+      {
+        statusCode: 200,
+        headers: { 'Content-Type': 'image/jpeg' },
+        body: buffer.toString('base64'),
+        isBase64Encoded: true
+      }
+    )
 };
