@@ -1,6 +1,11 @@
 // 'use strict';
 const Jimp = require('jimp');
 const AWS = require('aws-sdk');
+const querystring = require('querystring');
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 const s3 = new AWS.S3();
 
@@ -15,12 +20,21 @@ function create_UUID(){
 }
 
 module.exports.jeromeSays = async (event, context, callback) => {
+  const params = querystring.parse(event.body);
+
+  if (process.env.JEROME_SAYS !== params.token) {
+    return {
+      statusCode: 401,
+      body: "Unauthorized"
+    };
+  }
+
   let url = 'https://vwcsays.s3.us-east-2.amazonaws.com/jerome/'
   const images = ['captainJS.jpeg','jeromeSays.jpeg','motivationSays.jpeg','musclesSays.jpeg']
   url = url + `${images[Math.floor(Math.random() * images.length)]}`
 
   const textData = {
-    text: event.queryStringParameters.text ? event.queryStringParameters.text : 'Hello VWC', //the text to be rendered on the image
+    text: params.text ? params.text : 'Hello VWC', //the text to be rendered on the image
     maxWidth: 400, //image width - 10px margin left - 10px margin right
     maxHeight: 267, //logo height + margin
     placementX: 505, // 10px in on the x axis
@@ -59,7 +73,7 @@ module.exports.jeromeSays = async (event, context, callback) => {
           image_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
           thumb_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
         }
-      ] 
+      ]
     }
 
     callback(null, {
@@ -73,7 +87,7 @@ module.exports.jeromeSays = async (event, context, callback) => {
       isBase64Encoded: false
     })
 
-    
+
 };
 
 module.exports.jodySays = async (event, context, callback) => {
@@ -134,7 +148,7 @@ module.exports.jodySays = async (event, context, callback) => {
           image_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
           thumb_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
         }
-      ] 
+      ]
     }
 
     callback(null, {
