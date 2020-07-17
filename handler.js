@@ -20,7 +20,9 @@ function create_UUID(){
 }
 
 module.exports.jeromeSays = async (event, context, callback) => {
-  const params = querystring.parse(event.body);
+  let buff = new Buffer(event.body, 'base64');
+  let eventBody = buff.toString('ascii');
+  const params = querystring.parse(eventBody);
 
   if (process.env.JEROME_SAYS !== params.token) {
     return {
@@ -59,7 +61,7 @@ module.exports.jeromeSays = async (event, context, callback) => {
 
     const buffer = await image.getBufferAsync(Jimp.MIME_JPEG);
 
-    const key = `tempgit${create_UUID()}.jpeg`
+    const key = `temp${create_UUID()}.jpeg`
 
     await s3.putObject({
       Bucket: process.env.BUCKET,
@@ -68,8 +70,10 @@ module.exports.jeromeSays = async (event, context, callback) => {
     }).promise()
 
     const respBody = {
+      response_type: "in_channel",
       attachments:[
         {
+          params,
           image_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
           thumb_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
         }
@@ -82,7 +86,6 @@ module.exports.jeromeSays = async (event, context, callback) => {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       },
-      // body: buffer.toString('base64'),
       body: JSON.stringify(respBody),
       isBase64Encoded: false
     })
@@ -91,6 +94,17 @@ module.exports.jeromeSays = async (event, context, callback) => {
 };
 
 module.exports.jodySays = async (event, context, callback) => {
+  let buff = new Buffer(event.body, 'base64');
+  let eventBody = buff.toString('ascii');
+  const params = querystring.parse(eventBody);
+
+  if (process.env.JEROME_SAYS !== params.token) {
+    return {
+      statusCode: 401,
+      body: "Unauthorized"
+    };
+  }
+
   const Jimp = require('jimp');
   let url = 'https://vwcsays.s3.us-east-2.amazonaws.com/jody/'
   let imageFileName;
@@ -110,7 +124,7 @@ module.exports.jodySays = async (event, context, callback) => {
   }
   url = url + imageFileName
   const textData = {
-    text: event.queryStringParameters.text ? event.queryStringParameters.text : 'Hello VWC', //the text to be rendered on the image
+    text: params.text ? params.text : 'Hello VWC', //the text to be rendered on the image
     maxWidth: 400, //image width - 10px margin left - 10px margin right
     maxHeight: 267, //logo height + margin
     placementX: 505, // 10px in on the x axis
@@ -143,8 +157,10 @@ module.exports.jodySays = async (event, context, callback) => {
     }).promise()
 
     const respBody = {
+      response_type: "in_channel",
       attachments:[
         {
+          params,
           image_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
           thumb_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
         }
@@ -157,7 +173,6 @@ module.exports.jodySays = async (event, context, callback) => {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       },
-      // body: buffer.toString('base64'),
       body: JSON.stringify(respBody),
       isBase64Encoded: false
     })

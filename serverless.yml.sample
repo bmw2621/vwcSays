@@ -39,7 +39,7 @@ functions:
     handler: handler.jeromeSays
     environment:
       BUCKET: ${self:custom.bucket}
-      JEROME_SAYS: D3caZoVgl6vxLnDszz6rAzDJ
+      JEROME_SAYS: *****SLACKBOT TOKEN*****
       NODE_ENV: production
     events:
       - http:
@@ -55,7 +55,7 @@ functions:
     handler: handler.jodySays
     environment:
       BUCKET: ${self:custom.bucket}
-      JODY_SAYS: D3caZoVgl6vxLnDszz6rAzDJ
+      JODY_SAYS: *****SLACKBOT TOKEN*****
       NODE_ENV: production
     events:
       - http:
