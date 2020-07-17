@@ -1,5 +1,18 @@
 // 'use strict';
 const Jimp = require('jimp');
+const AWS = require('aws-sdk');
+
+const s3 = new AWS.S3();
+
+function create_UUID(){
+  var dt = new Date().getTime();
+  var uuid = 'xxxxxxxx'.replace(/[x]/g, function(c) {
+      var r = (dt + Math.random()*16)%16 | 0;
+      dt = Math.floor(dt/16);
+      return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+  });
+  return uuid;
+}
 
 module.exports.jeromeSays = async (event, context, callback) => {
   let url = 'https://vwcsays.s3.us-east-2.amazonaws.com/jerome/'
@@ -32,22 +45,41 @@ module.exports.jeromeSays = async (event, context, callback) => {
 
     const buffer = await image.getBufferAsync(Jimp.MIME_JPEG);
 
+    const key = `${create_UUID()}.jpeg`
+
+    await s3.putObject({
+      Bucket: process.env.BUCKET,
+      Key: key,
+      Body: buffer,
+    }).promise()
+
+    const respBody = {
+      attachments:[
+        {
+          image_url:`https://vwcsaystemp.s3.us-east-2.amazonaws.com/${key}`,
+          thumb_url:`https://vwcsaystemp.s3.us-east-2.amazonaws.com/${key}`,
+        }
+      ] 
+    }
+
     callback(null, {
       statusCode: 200,
       headers: {
-        'Content-Type': 'image/jpeg',
+        'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       },
-      body: buffer.toString('base64'),
-      isBase64Encoded: true
+      // body: buffer.toString('base64'),
+      body: JSON.stringify(respBody),
+      isBase64Encoded: false
     })
+
+    
 };
 
 module.exports.jodySays = async (event, context, callback) => {
   const Jimp = require('jimp');
   let url = 'https://vwcsays.s3.us-east-2.amazonaws.com/jody/'
   let imageFileName;
-  console.log(event)
   switch(event.path){
     case '/jodySays/drill':
       imageFileName = 'jodyDrill.jpg';
@@ -88,17 +120,31 @@ module.exports.jodySays = async (event, context, callback) => {
     })
 
     const buffer = await image.getBufferAsync(Jimp.MIME_JPEG);
+    const key = `${create_UUID()}.jpeg`
 
-    callback(
-      null, 
-      {
-        statusCode: 200,
-        headers: {
-          'Content-Type': 'image/jpeg',
-          'Access-Control-Allow-Origin': '*'
-        },
-        body: buffer.toString('base64'),
-        isBase64Encoded: true
-      }
-    )
+    await s3.putObject({
+      Bucket: process.env.BUCKET,
+      Key: key,
+      Body: buffer,
+    }).promise()
+
+    const respBody = {
+      attachments:[
+        {
+          image_url:`https://vwcsaystemp.s3.us-east-2.amazonaws.com/${key}`,
+          thumb_url:`https://vwcsaystemp.s3.us-east-2.amazonaws.com/${key}`,
+        }
+      ] 
+    }
+
+    callback(null, {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      // body: buffer.toString('base64'),
+      body: JSON.stringify(respBody),
+      isBase64Encoded: false
+    })
 };

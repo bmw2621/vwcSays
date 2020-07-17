@@ -1,27 +1,44 @@
 service: vwcsays
+
 app: vwcsays
+
 org: bmw2621
-provider:
-  name: aws
-  runtime: nodejs12.x
-stage: dev
-region: us-east-1
-package:
-  excludeDevDependencies: false
-plugins:
-  - serverless-offline
-  - serverless-plugin-include-dependencies
-  - serverless-apigw-binary
-  - serverless-apigwy-binary
+
 custom:
   apigwBinary:
     types:           #list of mime-types
       - 'image/jpg'
       - 'image/jpeg'
       - 'image/png'
+  bucket: vwcsaystemp
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:PutObjectAcl
+      Resource: "arn:aws:s3:::${self:custom.bucket}/*"
+
+package:
+  excludeDevDependencies: false
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-include-dependencies
+  - serverless-apigw-binary
+  - serverless-apigwy-binary
+
+
 functions:
   jeromeSays:
     handler: handler.jeromeSays
+    environment:
+      BUCKET: ${self:custom.bucket}
     events:
       - http:
           path: /jeromeSays
@@ -31,8 +48,11 @@ functions:
             parameters:
               queryStrings:
                 text: true
+
   jodySays:
     handler: handler.jodySays
+    environment:
+      BUCKET: ${self:custom.bucket}
     events:
       - http:
           path: /jodySays/{jodyType}
