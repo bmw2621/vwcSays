@@ -32,7 +32,7 @@ module.exports.jeromeSays = async (event, context, callback) => {
   }
 
   let url = 'https://vwcsays.s3.us-east-2.amazonaws.com/jerome/'
-  const images = ['redshirt.jpeg','captainJS.jpeg','jeromeSays.jpeg','motivationSays.jpeg','musclesSays.jpeg']
+  const images = ['redshirt.jpeg','cascadia.jpeg','captainJS.jpeg','jeromeSays.jpeg','motivationSays.jpeg','musclesSays.jpeg']
   url = url + `${images[Math.floor(Math.random() * images.length)]}`
 
   const textData = {
