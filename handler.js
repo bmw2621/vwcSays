@@ -45,7 +45,7 @@ module.exports.jeromeSays = async (event, context, callback) => {
 
     const buffer = await image.getBufferAsync(Jimp.MIME_JPEG);
 
-    const key = `${create_UUID()}.jpeg`
+    const key = `temp${create_UUID()}.jpeg`
 
     await s3.putObject({
       Bucket: process.env.BUCKET,
@@ -56,8 +56,8 @@ module.exports.jeromeSays = async (event, context, callback) => {
     const respBody = {
       attachments:[
         {
-          image_url:`https://vwcsaystemp.s3.us-east-2.amazonaws.com/${key}`,
-          thumb_url:`https://vwcsaystemp.s3.us-east-2.amazonaws.com/${key}`,
+          image_url:`https://vwcsays.s3.us-east-2.amazonaws.com/temp/${key}`,
+          thumb_url:`https://vwcsays.s3.us-east-2.amazonaws.com/temp/${key}`,
         }
       ] 
     }
@@ -120,7 +120,7 @@ module.exports.jodySays = async (event, context, callback) => {
     })
 
     const buffer = await image.getBufferAsync(Jimp.MIME_JPEG);
-    const key = `${create_UUID()}.jpeg`
+    const key = `temp${create_UUID()}.jpeg`
 
     await s3.putObject({
       Bucket: process.env.BUCKET,
@@ -131,8 +131,8 @@ module.exports.jodySays = async (event, context, callback) => {
     const respBody = {
       attachments:[
         {
-          image_url:`https://vwcsaystemp.s3.us-east-2.amazonaws.com/${key}`,
-          thumb_url:`https://vwcsaystemp.s3.us-east-2.amazonaws.com/${key}`,
+          image_url:`https://vwcsays.s3.us-east-2.amazonaws.com/temp/${key}`,
+          thumb_url:`https://vwcsays.s3.us-east-2.amazonaws.com/temp/${key}`,
         }
       ] 
     }

@@ -10,7 +10,7 @@ custom:
       - 'image/jpg'
       - 'image/jpeg'
       - 'image/png'
-  bucket: vwcsaystemp
+  bucket: vwcsays/temp
 
 provider:
   name: aws
