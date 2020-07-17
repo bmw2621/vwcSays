@@ -56,8 +56,8 @@ module.exports.jeromeSays = async (event, context, callback) => {
     const respBody = {
       attachments:[
         {
-          image_url:`https://vwcsays.s3.us-east-2.amazonaws.com/temp/${key}`,
-          thumb_url:`https://vwcsays.s3.us-east-2.amazonaws.com/temp/${key}`,
+          image_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
+          thumb_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
         }
       ] 
     }
@@ -131,8 +131,8 @@ module.exports.jodySays = async (event, context, callback) => {
     const respBody = {
       attachments:[
         {
-          image_url:`https://vwcsays.s3.us-east-2.amazonaws.com/temp/${key}`,
-          thumb_url:`https://vwcsays.s3.us-east-2.amazonaws.com/temp/${key}`,
+          image_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
+          thumb_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
         }
       ] 
     }

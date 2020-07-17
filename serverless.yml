@@ -10,7 +10,7 @@ custom:
       - 'image/jpg'
       - 'image/jpeg'
       - 'image/png'
-  bucket: vwcsays/temp
+  bucket: vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu/temp
 
 provider:
   name: aws
