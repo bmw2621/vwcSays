@@ -32,7 +32,7 @@ module.exports.jeromeSays = async (event, context, callback) => {
   }
 
   let url = 'https://vwcsays.s3.us-east-2.amazonaws.com/jerome/'
-  const images = ['captainJS.jpeg','jeromeSays.jpeg','motivationSays.jpeg','musclesSays.jpeg']
+  const images = ['redshirt.jpeg','captainJS.jpeg','jeromeSays.jpeg','motivationSays.jpeg','musclesSays.jpeg']
   url = url + `${images[Math.floor(Math.random() * images.length)]}`
 
   const textData = {
@@ -73,7 +73,6 @@ module.exports.jeromeSays = async (event, context, callback) => {
       response_type: "in_channel",
       attachments:[
         {
-          params,
           image_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
           thumb_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
         }
@@ -160,7 +159,6 @@ module.exports.jodySays = async (event, context, callback) => {
       response_type: "in_channel",
       attachments:[
         {
-          params,
           image_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
           thumb_url:`https://vwcsays-dev-serverlessdeploymentbucket-17jlo01fyeebu.s3.amazonaws.com/temp/${key}`,
         }
