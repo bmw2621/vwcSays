@@ -45,7 +45,7 @@ module.exports.jeromeSays = async (event, context, callback) => {
 
     const buffer = await image.getBufferAsync(Jimp.MIME_JPEG);
 
-    const key = `temp${create_UUID()}.jpeg`
+    const key = `tempgit${create_UUID()}.jpeg`
 
     await s3.putObject({
       Bucket: process.env.BUCKET,
