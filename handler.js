@@ -96,6 +96,10 @@ module.exports.jodySays = async (event, context, callback) => {
   let buff = new Buffer(event.body, 'base64');
   let eventBody = buff.toString('ascii');
   const params = querystring.parse(eventBody);
+  const avatarOptions = ['drill', 'happy','eyeroll','mad']
+  let splitSentence = params.text.split(' ')
+  let avatar = avatarOptions.includes(splitSentence[0].toLowerCase()) ?  splitSentence.shift() : 'happy'
+  let text = splitSentence.join(' ')
 
   if (process.env.JEROME_SAYS !== params.token) {
     return {
@@ -107,23 +111,23 @@ module.exports.jodySays = async (event, context, callback) => {
   const Jimp = require('jimp');
   let url = 'https://vwcsays.s3.us-east-2.amazonaws.com/jody/'
   let imageFileName;
-  switch(event.path){
-    case '/jodySays/drill':
+  switch(avatar.toLowerCase()){
+    case 'drill':
       imageFileName = 'jodyDrill.jpg';
       break;
-    case '/jodySays/eyeroll':
+    case 'eyeroll':
       imageFileName = 'jodyEyeroll.jpg';
       break;
-    case '/jodySays/mad':
+    case 'mad':
       imageFileName = 'jodyMad.jpg';
       break;
-    case '/jodySays/happy':
+    case 'happy':
     default:
       imageFileName = 'jodyHappy.jpg';
   }
   url = url + imageFileName
   const textData = {
-    text: params.text ? params.text : 'Hello VWC', //the text to be rendered on the image
+    text: text ? text : 'Hello VWC', //the text to be rendered on the image
     maxWidth: 400, //image width - 10px margin left - 10px margin right
     maxHeight: 267, //logo height + margin
     placementX: 505, // 10px in on the x axis

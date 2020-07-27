@@ -55,16 +55,14 @@ functions:
     handler: handler.jodySays
     environment:
       BUCKET: ${self:custom.bucket}
-      JODY_SAYS: ----
+      JODY_SAYS: tx0OG91SUQoEZGoC2u5axYmy
       NODE_ENV: production
     events:
       - http:
-          path: /jodySays/{jodyType}
+          path: /jodySays/
           method: post
           contentHandling: CONVERT_TO_BINARY
           request:
             parameters:
               queryStrings:
                 text: true
-              paths:
-                jodyType: true
