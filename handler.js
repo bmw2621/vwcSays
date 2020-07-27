@@ -104,7 +104,7 @@ module.exports.jodySays = async (event, context, callback) => {
     };
   }
 
-  const avatarOptions = ['drill', 'happy','eyeroll','mad']
+  const avatarOptions = ['drill', 'happy','eyeroll','mad','cry']
   let splitSentence = params.text.split(' ')
   let avatar = avatarOptions.includes(splitSentence[0].toLowerCase()) ?  splitSentence.shift() : 'happy'
   let text = splitSentence.join(' ')
