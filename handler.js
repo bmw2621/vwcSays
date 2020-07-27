@@ -96,17 +96,20 @@ module.exports.jodySays = async (event, context, callback) => {
   let buff = new Buffer(event.body, 'base64');
   let eventBody = buff.toString('ascii');
   const params = querystring.parse(eventBody);
-  const avatarOptions = ['drill', 'happy','eyeroll','mad']
-  let splitSentence = params.text.split(' ')
-  let avatar = avatarOptions.includes(splitSentence[0].toLowerCase()) ?  splitSentence.shift() : 'happy'
-  let text = splitSentence.join(' ')
 
-  if (process.env.JEROME_SAYS !== params.token) {
+  console.log(params)
+  
+  if (process.env.JODY_SAYS !== params.token) {
     return {
       statusCode: 401,
       body: "Unauthorized"
     };
   }
+
+  const avatarOptions = ['drill', 'happy','eyeroll','mad']
+  let splitSentence = params.text.split(' ')
+  let avatar = avatarOptions.includes(splitSentence[0].toLowerCase()) ?  splitSentence.shift() : 'happy'
+  let text = splitSentence.join(' ')
 
   const Jimp = require('jimp');
   let url = 'https://vwcsays.s3.us-east-2.amazonaws.com/jody/'
