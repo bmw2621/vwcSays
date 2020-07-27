@@ -122,6 +122,9 @@ module.exports.jodySays = async (event, context, callback) => {
     case 'mad':
       imageFileName = 'jodyMad.jpg';
       break;
+    case 'cry':
+      imageFileName = 'jodyCry.jpg';
+      break;
     case 'happy':
     default:
       imageFileName = 'jodyHappy.jpg';
