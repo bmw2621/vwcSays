@@ -32,7 +32,7 @@ module.exports.jeromeSays = async (event, context, callback) => {
   }
 
   let url = 'https://vwcsays.s3.us-east-2.amazonaws.com/jerome/'
-  const images = ['redshirt.jpeg','cascadia.jpeg','captainJS.jpeg','jeromeSays.jpeg','motivationSays.jpeg','musclesSays.jpeg']
+  const images = ['avengenerdSays.jpeg','baneSays.jpeg','cigarSays','redshirt.jpeg','cascadia.jpeg','captainJS.jpeg','jeromeSays.jpeg','motivationSays.jpeg','musclesSays.jpeg']
   url = url + `${images[Math.floor(Math.random() * images.length)]}`
 
   const textData = {
@@ -96,8 +96,6 @@ module.exports.jodySays = async (event, context, callback) => {
   let buff = new Buffer(event.body, 'base64');
   let eventBody = buff.toString('ascii');
   const params = querystring.parse(eventBody);
-
-  console.log(params)
   
   if (process.env.JODY_SAYS !== params.token) {
     return {
